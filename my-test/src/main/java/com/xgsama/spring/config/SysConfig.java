@@ -15,7 +15,7 @@ public class SysConfig {
 
 	@Bean
 	public User sysUser() {
-		return new User("zszxz", "123");
+		return new User("cyz", "123");
 	}
 
 }
