@@ -15,6 +15,8 @@ import java.util.Arrays;
  */
 public class Main {
 	public static void main(String[] args) {
+		// 生命周期
+
 		// 获取容器
 		ApplicationContext ac = new AnnotationConfigApplicationContext(SysConfig.class);
 		// 获取 bean

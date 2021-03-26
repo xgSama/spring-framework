@@ -75,7 +75,7 @@ public abstract class InstantiationAwareBeanPostProcessorAdapter implements Smar
 		return null;
 	}
 
-	@Deprecated
+//	@Deprecated
 	@Override
 	public PropertyValues postProcessPropertyValues(
 			PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName) throws BeansException {
