@@ -80,6 +80,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	@Override
 	protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException {
 		// Create a new XmlBeanDefinitionReader for the given BeanFactory.
+		// TODO 给这个 BeanFactory 实例化一个 XmlBeanDefinitionReader
 		XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
 
 		// Configure the bean definition reader with this context's
@@ -90,7 +91,10 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 
 		// Allow a subclass to provide custom initialization of the reader,
 		// then proceed with actually loading the bean definitions.
+		// TODO 允许子类提供阅读器的自定义初始化，然后继续实际加载Bean定义。
+		// 这个没有子类去覆写这个方法
 		initBeanDefinitionReader(beanDefinitionReader);
+		// TODO 从xml中加载Definition
 		loadBeanDefinitions(beanDefinitionReader);
 	}
 
@@ -119,14 +123,18 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	 * @see #getResourcePatternResolver
 	 */
 	protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) throws BeansException, IOException {
+		// TODO ClassPathXmlApplicationContext(String path, Class<?> clazz)
 		Resource[] configResources = getConfigResources();
 		if (configResources != null) {
 			reader.loadBeanDefinitions(configResources);
 		}
+		// TODO ClassPathXmlApplicationContext(String configLocation)
 		String[] configLocations = getConfigLocations();
 		if (configLocations != null) {
 			reader.loadBeanDefinitions(configLocations);
 		}
+
+		// TODO 虽然上面存在两个分支，但是第二个在下一步中也被转换成了Resource，执行同样的逻辑
 	}
 
 	/**

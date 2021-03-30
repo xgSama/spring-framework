@@ -130,6 +130,7 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 		}
 		try {
 			// TODO 初始化一个 DefaultListableBeanFactory
+			//  	DefaultListableBeanFactory间接或直接的实现了最上层BeanFactory的三个接口
 			DefaultListableBeanFactory beanFactory = createBeanFactory();
 			// TODO 用于 BeanFactory 的序列化
 			beanFactory.setSerializationId(getId());

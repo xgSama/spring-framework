@@ -40,6 +40,9 @@ import org.springframework.lang.Nullable;
  */
 public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 
+	// TODO 我们可以看到，默认只提供 singleton 和 prototype 两种，
+	//  其他的request, session, globalSession, application, websocket 这几种都属于基于 web 的扩展。
+
 	/**
 	 * Scope identifier for the standard singleton scope: {@value}.
 	 * <p>Note that extended bean factories might support further scopes.
