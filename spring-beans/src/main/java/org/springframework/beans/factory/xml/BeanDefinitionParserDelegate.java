@@ -415,6 +415,8 @@ public class BeanDefinitionParserDelegate {
 		String id = ele.getAttribute(ID_ATTRIBUTE);
 		String nameAttr = ele.getAttribute(NAME_ATTRIBUTE);
 
+		// TODO 将 name 属性的定义按照 “逗号、分号、空格” 切分，形成一个 别名列表数组，
+		//      当然，如果你不定义 name 属性的话，就是空的了
 		List<String> aliases = new ArrayList<>();
 		if (StringUtils.hasLength(nameAttr)) {
 			String[] nameArr = StringUtils.tokenizeToStringArray(nameAttr, MULTI_VALUE_ATTRIBUTE_DELIMITERS);
@@ -422,6 +424,7 @@ public class BeanDefinitionParserDelegate {
 		}
 
 		String beanName = id;
+		// TODO 如果没有指定id, 那么用别名列表的第一个名字作为beanName
 		if (!StringUtils.hasText(beanName) && !aliases.isEmpty()) {
 			beanName = aliases.remove(0);
 			if (logger.isTraceEnabled()) {
@@ -429,20 +432,32 @@ public class BeanDefinitionParserDelegate {
 						"' as bean name and " + aliases + " as aliases");
 			}
 		}
-
+		// TODO 现在是从parseBeanDefinitionElement(Element ele)进来,containingBean为null
 		if (containingBean == null) {
 			checkNameUniqueness(beanName, aliases, ele);
 		}
-
+		// TODO 根据 <bean ...>...</bean> 中的配置创建 BeanDefinition，然后把配置中的信息都设置到实例中,
+		// 		下面这行结束后，一个 BeanDefinition 实例就出来了。
 		AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);
+		// TODO 到这里，整个 <bean /> 标签就算解析结束了，一个 BeanDefinition 就形成了。
+
 		if (beanDefinition != null) {
+			// TODO 如果都没有设置 id 和 name，那么此时的 beanName 就会为 null，进入下面这块代码产生
 			if (!StringUtils.hasText(beanName)) {
 				try {
+					// TODO containingBean为null，跳过
 					if (containingBean != null) {
 						beanName = BeanDefinitionReaderUtils.generateBeanName(
 								beanDefinition, this.readerContext.getRegistry(), true);
 					}
+
 					else {
+						/*
+						 * TODO 以测试用的类为例
+						 *  1. beanName 为：com.xgsama.spring.model.User#0
+						 *  2. beanClassName 为：com.xgsama.spring.model.User
+						 *  答案在这里：org.springframework.beans.factory.support.BeanDefinitionReaderUtils.uniqueBeanName()
+						 */
 						beanName = this.readerContext.generateBeanName(beanDefinition);
 						// Register an alias for the plain bean class name, if still possible,
 						// if the generator returned the class name plus a suffix.
@@ -464,7 +479,10 @@ public class BeanDefinitionParserDelegate {
 					return null;
 				}
 			}
+
 			String[] aliasesArray = StringUtils.toStringArray(aliases);
+
+			// TODO 返回BeanDefinitionHolder
 			return new BeanDefinitionHolder(beanDefinition, beanName, aliasesArray);
 		}
 
@@ -496,6 +514,7 @@ public class BeanDefinitionParserDelegate {
 	 * Parse the bean definition itself, without regard to name or aliases. May return
 	 * {@code null} if problems occurred during the parsing of the bean definition.
 	 */
+	// TODO 这个方法完成后一个 BeanDefinition 实例就出来了。
 	@Nullable
 	public AbstractBeanDefinition parseBeanDefinitionElement(
 			Element ele, String beanName, @Nullable BeanDefinition containingBean) {

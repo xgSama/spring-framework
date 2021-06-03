@@ -141,6 +141,7 @@ public abstract class BeanDefinitionReaderUtils {
 		int counter = -1;
 
 		// Increase counter until the id is unique.
+		// TODO GENERATED_BEAN_NAME_SEPARATOR = "#"
 		String prefix = beanName + GENERATED_BEAN_NAME_SEPARATOR;
 		while (counter == -1 || registry.containsBeanDefinition(id)) {
 			counter++;
@@ -161,6 +162,7 @@ public abstract class BeanDefinitionReaderUtils {
 
 		// Register bean definition under primary name.
 		String beanName = definitionHolder.getBeanName();
+		// TODO here
 		registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition());
 
 		// Register aliases for bean name, if any.
